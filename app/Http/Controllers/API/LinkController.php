@@ -54,7 +54,7 @@ class LinkController extends Controller
                 return response()->json(['message' => $e->getMessage(), 500]);
             }
 
-            return LinkResource::collection(collect($links));
+            return LinkResource::collection(collect($links))->response()->setStatusCode(Response::HTTP_CREATED);
         }
 
         try {
@@ -63,7 +63,7 @@ class LinkController extends Controller
             return response()->json(['message' => $e->getMessage(), 500]);
         }
 
-        return LinkResource::make($link);
+        return LinkResource::make($link)->response()->setStatusCode(Response::HTTP_CREATED);
     }
 
     /**
@@ -110,7 +110,7 @@ class LinkController extends Controller
             'title' => $linkData['title'] ?? null,
         ]);
 
-        if ($linkData['tags']) {
+        if (isset($linkData['tags'])) {
             $link->syncTags($linkData['tags']);
         }
 

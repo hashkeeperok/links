@@ -20,7 +20,7 @@ class LinkResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => 'id',
+            'id' => $this->id,
             'url' => URL::to("links/$this->short_code"),
             'title' => $this->title,
             'tags' => $this->whenLoaded('tags', fn () => $this->tags->pluck('name')),
